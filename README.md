@@ -138,8 +138,45 @@ URL: {{base_url}}/login
 }
 
 
+## Documentacion de API
+La documentacion ha sido realizada con swagger y la encontrara en la siguiente URL
 
-## Notas adicionales
+http://localhost:8080/doc/swagger-ui/index.html
+
+
+
+
+## Arquitectura Modular del Proyecto
+El proyecto está diseñado con una arquitectura modular, lo que significa que se organiza en módulos independientes que facilitan la escalabilidad, mantenibilidad y reutilización del código. Cada módulo tiene una responsabilidad específica y se comunica con otros módulos mediante interfaces bien definidas. Esto permite desarrollar, probar y desplegar módulos de forma aislada.
+
+La aplicación utiliza el marco Spring Boot, que simplifica la configuración y el desarrollo de aplicaciones Java, proporcionando una base robusta y extensible. Además, se implementan diversas librerías para cubrir aspectos clave como persistencia de datos, seguridad, comunicación entre servicios, validación y generación de documentación.
+
+
+## Principales Bibliotecas Utilizadas
+### Persistencia de Datos:
+
+spring-boot-starter-data-jpa: Proporciona una integración con JPA para manejar operaciones con bases de datos relacionales de forma sencilla y eficiente.
+mysql-connector-j: Permite la conexión a bases de datos MySQL.
+Seguridad:
+
+spring-boot-starter-security: Facilita la configuración y gestión de seguridad en la aplicación, incluyendo autenticación y autorización.
+io.jsonwebtoken (jjwt-api, jjwt-impl, jjwt-jackson): Manejo de JSON Web Tokens (JWT) para implementar autenticación basada en tokens.
+### Desarrollo Web:
+
+spring-boot-starter-web: Soporte para el desarrollo de aplicaciones web basadas en Spring MVC, incluyendo APIs REST.
+spring-cloud-starter-openfeign: Facilita la comunicación entre servicios mediante clientes HTTP declarativos.
+### Validación:
+
+spring-boot-starter-validation: Permite realizar validaciones de datos de entrada utilizando anotaciones como @NotNull, @Size, entre otras.
+### Documentación:
+
+springdoc-openapi-starter-webmvc-ui: Proporciona integración con OpenAPI/Swagger para generar documentación interactiva de la API REST.
+
+### Herramientas de Desarrollo:
+
+spring-boot-devtools: Mejora la experiencia de desarrollo con características como recarga automática de cambios.
+
+### Notas adicionales
 
 - La configuración de la base de datos MySQL ya está incluida en un contenedor Docker, lo que simplifica el proceso de configuración.
 - Asegúrate de que el archivo `.env` esté correctamente configurado antes de iniciar los contenedores para evitar errores de conexión.
