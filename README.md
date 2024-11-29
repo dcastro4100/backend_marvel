@@ -55,6 +55,90 @@ Luego, reinicia los contenedores para aplicar el cambio:
 docker compose down
 docker compose up -d
    ```
+
+## Estructura de base de datos
+
+
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UKr43af9ap4edm43mmtq01oddj6` (`username`),
+  UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE roles (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) NOT NULL,
+    PRIMARY KEY ( id )
+) ENGINE = InnoDB CHARACTER SET utf8;
+ 
+CREATE TABLE users_roles (
+    user_id BIGINT NOT NULL ,
+    role_id BIGINT NOT NULL
+) ENGINE = InnoDB CHARACTER SET utf8;
+ 
+ALTER TABLE roles
+ADD CONSTRAINT UK_roles_name
+UNIQUE (name);
+ 
+ALTER TABLE users_roles
+ADD CONSTRAINT UK_user_id_roles_id
+UNIQUE (user_id, role_id);
+ 
+ALTER TABLE users_roles
+ADD CONSTRAINT FK_users_roles_roles_id
+FOREIGN KEY (role_id) REFERENCES roles(id);
+ 
+ALTER TABLE users_roles
+ADD CONSTRAINT FK_users_roles_user_id
+FOREIGN KEY (user_id) REFERENCES users(id);
+
+CREATE TABLE `api_logs` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(6) DEFAULT NULL,
+  `endpoint` varchar(255) NOT NULL,
+  `http_method` varchar(255) NOT NULL,
+  `request_body` text,
+  `request_headers` text,
+  `response_body` text,
+  `response_status` int(11) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+insert into roles(name) values('ROLE_USER'),('ROLE_ADMIN');
+
+insert into users values
+('1','jperez','jperez@gmail.com','$2a$10$Rg4EAgKiOhfxNUT0/0u3Eud9af2T5huvDrgwW46JNcKSS2G10ure2'),
+('2','johan.perez','johan.perez@gmail.com','$2a$10$6s/50vavk4c1U.yYz8fJI.DRWUL0VycjRLZTJ1jzzBSXqJXakEMIy');
+
+insert into users_roles values('2','2');
+insert into users_roles values('1','1');
+
+
+## Credenciales de prueba
+
+URL: {{base_url}}/login
+
+
+{
+	"username": "johan.perez",
+    "password":"P@ssw0rd"
+}
+
+
+{
+	"username": "jperez",
+    "password":"P@ssw0rd"
+}
+
+
+
 ## Notas adicionales
 
 - La configuración de la base de datos MySQL ya está incluida en un contenedor Docker, lo que simplifica el proceso de configuración.
